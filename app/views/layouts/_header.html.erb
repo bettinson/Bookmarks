@@ -1,0 +1,5 @@
+<h1><%= link_to "Bookmarks", root_path %></h1> <div class="right-button"><%= link_to "New", bookmarks_new_path %></div>
+<% if flash[:notice] %>
+    <br>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>

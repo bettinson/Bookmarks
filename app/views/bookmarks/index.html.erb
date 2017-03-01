@@ -1,0 +1,6 @@
+<% @bookmarks.reverse.each do |bookmark| %>
+<div class="bookmark">
+    <p><%= link_to bookmark.url, bookmark.url %> <div class="right-button"><%= link_to "Edit", bookmarks_edit_path(id: bookmark.id) %></div>
+    <p><%= bookmark.description %></p>
+</div>
+<% end %>

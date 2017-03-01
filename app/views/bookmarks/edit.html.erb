@@ -1,0 +1,7 @@
+<%= form_tag bookmarks_update_url(id: @bookmark.id) do %>
+  <label>URL</label><br>
+  <%= text_field_tag :url, @bookmark.url %><br>
+  <label>Description</label><br>
+  <%= text_area_tag :description, @bookmark.description, size: '30x10'%><br>
+  <%= submit_tag "Edit" %>
+<% end %>

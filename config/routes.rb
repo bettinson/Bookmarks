@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'bookmarks/new' => 'bookmarks#new'
+  get 'bookmarks/index' => 'bookmarks#index'
+  post 'bookmarks/create' => 'bookmarks#create'
+  post 'bookmarks/update', to: 'bookmarks#update'
+  get 'bookmarks/destroy' => 'bookmarks#destroy'
+  get 'bookmarks/edit' => 'bookmarks#edit'
+  root 'bookmarks#index'
 end

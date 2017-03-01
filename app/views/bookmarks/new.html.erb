@@ -1,0 +1,7 @@
+<p> Create new bookmark </p>
+<%= form_tag bookmarks_create_url do %>
+    <p> URL: </p> <%= text_field_tag :url %>
+    <p> Description: </p> <%= text_area_tag :description, "",  size: '30x10'%>
+    <br>
+    <%= submit_tag %>
+<% end %>

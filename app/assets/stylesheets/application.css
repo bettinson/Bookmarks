@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+        padding-top: 20px;
+  margin: 0 auto;
+  max-width: 50em;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+div.right-button {
+    text-align: right;
+    display:inline;
+    float: right;
+    text-decoration: underline;
+}
+
+div.bookmark {
+    padding-top: px;
+    background-color: #F5F5F5;
+}
+
+h1 {
+    color: black;
+    text-align: left;
+    display:inline;
+}
+
+a:visited {
+    /*color: black;*/
+    text-decoration: mediumpurple;
+}
+
+div.notice {
+    background-color: lightgrey;
+    color:black;
+}
