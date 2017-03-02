@@ -18,14 +18,14 @@ body {
         padding-top: 20px;
   margin: 0 auto;
   max-width: 50em;
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: "Geneva", "Arial", sans-serif;
 }
 
 div.right-button {
     text-align: right;
     display:inline;
     float: right;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 
 div.bookmark {

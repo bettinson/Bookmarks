@@ -1,4 +1,5 @@
 class BookmarksController < ApplicationController
+  before_action :require_user, only: [:new, :create, :edit, :destroy]
   def index
     @bookmarks = Bookmark.all
   end
@@ -10,9 +11,8 @@ class BookmarksController < ApplicationController
     url = params[:url]
     description = params[:description]
     # Temporary work around as bookmarks belong to a user
-    @user = User.new(name: "Matt Bettinson", email: "mattbettinson@me.com", password: "password", password_confirmation: "password")
     bookmark = Bookmark.new(url: url, description: description)
-    bookmark.user = @user
+    bookmark.user = current_user
     unless bookmark.valid?
       redirect_to bookmarks_new_path, notice: "Invalid bookmark."
     end
@@ -22,6 +22,14 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
+    @bookmark = Bookmark.find(params[:id])
+    if @bookmark.user = current_user
+      if @bookmark.destroy
+        redirect_to bookmarks_index_url, notice: "Bookmark was deleted!"
+      else
+        redirect_to bookmarks_index_url, notice: "Bookmark was unable to be deleted."
+      end
+    end
   end
 
   def edit
@@ -33,11 +41,11 @@ class BookmarksController < ApplicationController
     if @bookmark.update(url: params[:url], description: params[:description])
       redirect_to root_url
     else
-      redirect_to :controller => "bookmarks", :action => "edit", :id => @bookmark.id, :notice => "message fine" 
+      redirect_to :controller => "bookmarks", :action => "edit", :id => @bookmark.id, :notice => "message fine"
     end
   end
 
-  private 
+  private
   def valid_bookmark?
     if @url.empty? || @description.empty?
     end

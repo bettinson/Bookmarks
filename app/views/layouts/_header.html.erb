@@ -1,4 +1,19 @@
-<h1><%= link_to "Bookmarks", root_path %></h1> <div class="right-button"><%= link_to "New", bookmarks_new_path %></div>
+<h1><%= link_to "Bookmarks", root_path %></h1>
+<div class="right-button">
+  <%= link_to "New", bookmarks_new_path %>
+</div>
+<% if current_user %>
+  <ul>
+    <li><%= current_user.email %></li>
+    <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+  </ul>
+<% else %>
+  <ul>
+    <li><%= link_to "Login", 'login' %></a></li>
+    <li><%= link_to "Signup", 'signup' %></a></li>
+  </ul>
+<% end %>
+
 <% if flash[:notice] %>
     <br>
     <div class="notice"><%= flash[:notice] %></div>
