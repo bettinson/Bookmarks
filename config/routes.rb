@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post 'bookmarks/update', to: 'bookmarks#update'
   get 'bookmarks/destroy' => 'bookmarks#destroy'
   get 'bookmarks/edit' => 'bookmarks#edit'
+  get 'bookmarks/view' => 'bookmarks#show'
   delete 'bookmarks/' => 'bookmarks#destroy'
   root 'bookmarks#index'
 

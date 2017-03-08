@@ -6,6 +6,6 @@ class BookmarkTest < ActiveSupport::TestCase
   end
 
   test "Login and post a bookmark and logout" do
-
+    post login_path, params: @user_params
   end
 end

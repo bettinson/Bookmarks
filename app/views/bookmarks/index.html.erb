@@ -6,5 +6,6 @@
       <%= link_to 'Delete', bookmarks_url(id: bookmark.id), method: :delete, data: { confirm: 'Are you sure?' } %>
       <%= link_to "Edit", bookmarks_edit_path(id: bookmark.id) %>
     <% end %>
+    <%= link_to "View", bookmarks_view_path(id: bookmark.id) %>
 </div>
 <% end %>

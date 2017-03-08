@@ -1,5 +1,6 @@
 class BookmarksController < ApplicationController
   before_action :require_user, only: [:new, :create, :edit, :destroy]
+
   def index
     @bookmarks = Bookmark.all
   end
@@ -10,7 +11,6 @@ class BookmarksController < ApplicationController
   def create
     url = params[:url]
     description = params[:description]
-    # Temporary work around as bookmarks belong to a user
     bookmark = Bookmark.new(url: url, description: description)
     bookmark.user = current_user
     unless bookmark.valid?
@@ -33,6 +33,10 @@ class BookmarksController < ApplicationController
   end
 
   def edit
+    @bookmark = Bookmark.find(params[:id])
+  end
+
+  def show
     @bookmark = Bookmark.find(params[:id])
   end
 
