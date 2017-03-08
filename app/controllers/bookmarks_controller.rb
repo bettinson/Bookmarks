@@ -13,6 +13,8 @@ class BookmarksController < ApplicationController
     description = params[:description]
     bookmark = Bookmark.new(url: url, description: description)
     bookmark.user = current_user
+    current_user.bookmarks << bookmark
+    
     unless bookmark.valid?
       redirect_to bookmarks_new_path, notice: "Invalid bookmark."
     end
