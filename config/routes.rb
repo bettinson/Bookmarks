@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'user/new'
-
   get 'bookmarks/new' => 'bookmarks#new'
   get 'bookmarks/index' => 'bookmarks#index'
   post 'bookmarks/create' => 'bookmarks#create'

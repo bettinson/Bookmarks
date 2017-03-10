@@ -1,11 +1,13 @@
-<% @bookmarks.reverse.each do |bookmark| %>
-<div class="bookmark">
-    <p><%= link_to bookmark.url, bookmark.url %> <div class="right-button">Posted by <%= link_to bookmark.user.name, bookmark.user %></div>
-    <p><%= bookmark.description %></p>
-    <% if current_user == bookmark.user %>
-      <%= link_to 'Delete', bookmarks_url(id: bookmark.id), method: :delete, data: { confirm: 'Are you sure?' } %>
-      <%= link_to "Edit", bookmarks_edit_path(id: bookmark.id) %>
-    <% end %>
-    <%= link_to "View", bookmarks_view_path(id: bookmark.id) %>
-</div>
+<% unless @bookmarks.nil? %>
+  <% @bookmarks.reverse.each do |bookmark| %>
+  <div class="bookmark">
+      <p><%= link_to bookmark.url, bookmark.url %> <div class="right-button">Posted by <%= link_to bookmark.user.name, bookmark.user %></div>
+      <p><%= bookmark.description %></p>
+      <% if current_user == bookmark.user %>
+        <%= link_to 'Delete', bookmarks_url(id: bookmark.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to "Edit", bookmarks_edit_path(id: bookmark.id) %>
+      <% end %>
+      <%= link_to "View", bookmarks_view_path(id: bookmark.id) %>
+  </div>
+  <% end %>
 <% end %>
