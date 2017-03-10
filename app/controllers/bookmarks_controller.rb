@@ -17,6 +17,7 @@ class BookmarksController < ApplicationController
     
     unless bookmark.valid?
       redirect_to bookmarks_new_path, notice: "Invalid bookmark."
+      return
     end
     bookmark.save
     redirect_to root_url, notice: "Bookmark saved."

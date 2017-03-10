@@ -23,8 +23,15 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Bookmark.count') do
       post bookmarks_create_url, params: { url: 'mattbettinson.com', description: "my site"}
     end
+   assert_redirected_to root_url
+  end
 
-    assert_redirected_to root_url
+  test "shouldn't upload invalid image" do
+    login
+    assert_no_difference('Bookmark.count') do
+      post bookmarks_create_url, params: { url: '', description: ''}
+    end
+   assert_redirected_to bookmarks_new_url
   end
 
   private
