@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'tags/index'
+
+  get 'tags/show'
+
   get 'bookmarks/new' => 'bookmarks#new'
   get 'bookmarks/index' => 'bookmarks#index'
   post 'bookmarks/create' => 'bookmarks#create'

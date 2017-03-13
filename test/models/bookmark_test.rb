@@ -13,6 +13,4 @@ class BookmarkTest < ActiveSupport::TestCase
     @bookmark.tags << @tag
     assert @bookmark.tags.include?(@tag)
   end
-
-  private
 end

@@ -11,10 +11,18 @@ class BookmarksController < ApplicationController
   def create
     url = params[:url]
     description = params[:description]
+    tags = split_tags(params[:tags])
     bookmark = Bookmark.new(url: url, description: description)
+
+    unless tags.nil? || tags.empty?
+      tags.each do |t|
+        bookmark.tags.append Tag.new(name: t)
+      end
+    end
+
     bookmark.user = current_user
     current_user.bookmarks << bookmark
-    
+
     unless bookmark.valid?
       redirect_to bookmarks_new_path, notice: "Invalid bookmark."
       return
@@ -26,7 +34,7 @@ class BookmarksController < ApplicationController
 
   def destroy
     @bookmark = Bookmark.find(params[:id])
-    if @bookmark.user = current_user
+    if @bookmark.user == current_user
       if @bookmark.destroy
         redirect_to bookmarks_index_url, notice: "Bookmark was deleted!"
       else
@@ -37,6 +45,9 @@ class BookmarksController < ApplicationController
 
   def edit
     @bookmark = Bookmark.find(params[:id])
+    unless @bookmark.user == current_user
+      redirect_to bookmarks_index_url, notice: "That isn't your bookmark."
+    end
   end
 
   def show
@@ -56,5 +67,9 @@ class BookmarksController < ApplicationController
   def valid_bookmark?
     if @url.empty? || @description.empty?
     end
+  end
+
+  def split_tags(tags)
+    tags.split(' ') unless tags.nil?
   end
 end

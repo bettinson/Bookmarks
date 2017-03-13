@@ -18,7 +18,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should upload image" do
+  test "should create bookmark" do
     login
     assert_difference('Bookmark.count') do
       post bookmarks_create_url, params: { url: 'mattbettinson.com', description: "my site"}
@@ -32,6 +32,20 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
       post bookmarks_create_url, params: { url: '', description: ''}
     end
    assert_redirected_to bookmarks_new_url
+  end
+
+  test "should create bookmark with tags" do
+    login
+    tag_names = ['programming', 'me']
+    url = "github.bettinson.com"
+    assert_difference('Bookmark.count') do
+      post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
+    end
+    bookmark = Bookmark.find_by(url: url)
+    
+    bookmark.tags.each_with_index do |tag, index|
+      assert_equal tag.name, tag_names[index]
+    end
   end
 
   private
