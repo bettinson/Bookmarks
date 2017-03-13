@@ -1,2 +1,6 @@
-<h1>Tags#index</h1>
-<p>Find me in app/views/tags/index.html.erb</p>
+<% @tags.each do |tag| %>
+<h3><%= tag.name %></h3>
+<% tag.bookmarks.each do |b| %>
+    <%= link_to b.url, bookmarks_view_path(id: b.id) %>
+<% end %>
+<% end %>

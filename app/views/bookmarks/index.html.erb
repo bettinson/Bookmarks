@@ -8,6 +8,10 @@
         <%= link_to "Edit", bookmarks_edit_path(id: bookmark.id) %>
       <% end %>
       <%= link_to "View", bookmarks_view_path(id: bookmark.id) %>
+        <p>Tags:</p>
+        <% bookmark.tags.each do |tag| %>
+            <%= link_to tag.name, tags_show_url(id: tag.id) %>
+        <% end %>
   </div>
   <% end %>
 <% end %>

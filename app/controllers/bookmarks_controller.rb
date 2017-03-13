@@ -16,24 +16,22 @@ class BookmarksController < ApplicationController
 
     unless tags.nil? || tags.empty?
       tags.each do |t|
-        tag = Tag.new(name: t)
-        tag.bookmarks << bookmark
+        tag = Tag.where(name: t).first_or_initialize
         bookmark.tags.append tag
         tag.save
       end
     end
 
     bookmark.user = current_user
-    current_user.bookmarks << bookmark
+    current_user.bookmarks.append bookmark
 
     unless bookmark.valid?
       redirect_to bookmarks_new_path, notice: "Invalid bookmark."
       return
     end
-    
+
     bookmark.save
     redirect_to root_url, notice: "Bookmark saved."
-    # valid_bookmark?
   end
 
   def destroy

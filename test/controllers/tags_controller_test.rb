@@ -5,10 +5,4 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     get tags_index_url
     assert_response :success
   end
-
-  test "should get show" do
-    get tags_show_url
-    assert_response :success
-  end
-
 end
