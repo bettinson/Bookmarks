@@ -43,10 +43,7 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     end
 
     bookmark = Bookmark.find_by(url: url)
-    # Optimistic
-    # TODO: Make sure there aren't duplicate tags
     tag = Tag.find_by(name: "programming")
-
     assert tag.bookmarks.include? (bookmark)
     assert bookmark.tags.include? (tag)
   end

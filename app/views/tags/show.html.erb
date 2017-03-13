@@ -1,4 +1,4 @@
 <h1>Tag: <%= @tag.name %></h1>
 <% @tag.bookmarks.each do |b| %>
-    <%= link_to b.url, bookmarks_view_path(id: b.id) %>
+    <li><%= link_to b.url, bookmarks_view_path(id: b.id) %>, posted by <%= link_to b.user.name, b.user%></li>
 <% end %>

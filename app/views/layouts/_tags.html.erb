@@ -1,0 +1,6 @@
+<div class="right-button">
+    <% current_user.tags.each do |tag| %>
+        <p><%= link_to tag.name, tags_show_url(id: tag.id) %></p>
+    <% end %>
+</div>
+
