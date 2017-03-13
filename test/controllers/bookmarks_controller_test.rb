@@ -41,11 +41,14 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Bookmark.count') do
       post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
     end
+
     bookmark = Bookmark.find_by(url: url)
-    
-    bookmark.tags.each_with_index do |tag, index|
-      assert_equal tag.name, tag_names[index]
-    end
+    # Optimistic
+    # TODO: Make sure there aren't duplicate tags
+    tag = Tag.find_by(name: "programming")
+
+    assert tag.bookmarks.include? (bookmark)
+    assert bookmark.tags.include? (tag)
   end
 
   private

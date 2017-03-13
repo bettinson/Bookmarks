@@ -16,7 +16,10 @@ class BookmarksController < ApplicationController
 
     unless tags.nil? || tags.empty?
       tags.each do |t|
-        bookmark.tags.append Tag.new(name: t)
+        tag = Tag.new(name: t)
+        tag.bookmarks << bookmark
+        bookmark.tags.append tag
+        tag.save
       end
     end
 
@@ -27,6 +30,7 @@ class BookmarksController < ApplicationController
       redirect_to bookmarks_new_path, notice: "Invalid bookmark."
       return
     end
+    
     bookmark.save
     redirect_to root_url, notice: "Bookmark saved."
     # valid_bookmark?

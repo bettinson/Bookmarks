@@ -1,2 +1,5 @@
 <h3><%= link_to @bookmark.url, @bookmark.url %> </h3>
 <p> <%= @bookmark.description %> </p>
+<% @bookmark.tags.each do |t| %>
+<p> <%= t.name %> </p>
+<% end %>
