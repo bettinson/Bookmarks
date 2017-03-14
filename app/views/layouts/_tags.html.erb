@@ -1,6 +1,9 @@
-<div class="right-button">
-    <% current_user.tags.each do |tag| %>
-        <p><%= link_to tag.name, tags_show_url(id: tag.id) %></p>
-    <% end %>
+<div class="container">
+    <ul class="nav navbar-nav navbar-right tag">
+        <h3>Tags
+        </h3>
+        <% Tag.all.each do |tag| %>
+        <li><%= link_to tag.name, tags_show_url(id: tag.id) %></li>
+        <% end %>
+    </ul>
 </div>
-

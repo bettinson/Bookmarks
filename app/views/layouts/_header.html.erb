@@ -1,20 +1,20 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top">
   <div class="container">
-      <ul class="nav navbar-nav navbar-left">
+      <ul class="nav navbar-nav navbar-left header">
         <li><%= link_to "Bookmarks", root_path %></li>
         <li><%= link_to "Tags", tags_index_url %></li>
         <li><%= link_to "New", bookmarks_new_path, class: 'btn btn-success' %></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right vertical-center header">
       <% if current_user %>
-      <%= current_user.email %>
-      <%= link_to "Log out", logout_path, method: "delete" %>
+          <li> <%= current_user.email %> </li>
+          <li><%= link_to "Log out", logout_path, method: "delete" %></li>
       <% else %>
-      <li><%= link_to "Login", 'login' %></li>
-      <li><%= link_to "Signup", 'signup' %></li>
+        <li><%= link_to "Login", 'login' %></li>
+        <li><%= link_to "Signup", 'signup' %></li>
       <% end %>
-      </ul
+      </ul>
       <% if flash[:notice] %>
       <br>
       <div class="notice"><%= flash[:notice] %></div>
