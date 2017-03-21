@@ -36,7 +36,7 @@ class BookmarksController < ApplicationController
 
   def destroy
     @bookmark = Bookmark.find(params[:id])
-    if @bookmark.user == current_user
+    if @bookmark.user = current_user
       if @bookmark.destroy
         redirect_to bookmarks_index_url, notice: "Bookmark was deleted!"
       else
