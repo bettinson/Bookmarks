@@ -1,5 +1,5 @@
 class BookmarksController < ApplicationController
-  before_action :require_user, only: [:new, :create, :edit, :destroy]
+  before_action :require_user, only: [:new, :create, :edit, :destroy, :react]
 
   def index
     @bookmarks = Bookmark.all
@@ -32,6 +32,14 @@ class BookmarksController < ApplicationController
 
     bookmark.save
     redirect_to root_url, notice: "Bookmark saved."
+  end
+
+  def react
+    @bookmark = Bookmark.find(params[:id])
+    @reaction = Reaction.where(bookmark_id: @bookmark.id, user_id: current_user.id).first_or_initialize
+    @reaction.liked = params[:liked]
+    @bookmark.reactions.append @reaction unless @reaction.bookmark == @bookmark
+    @reaction.save
   end
 
   def destroy

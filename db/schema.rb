@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321202703) do
+ActiveRecord::Schema.define(version: 20170323190051) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.string   "url"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20170321202703) do
   end
 
   create_table "reactions", force: :cascade do |t|
-    t.boolean  "liked"
+    t.integer  "liked"
     t.integer  "bookmark_id"
     t.integer  "user_id"
     t.datetime "created_at",  null: false

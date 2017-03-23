@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'bookmarks/edit' => 'bookmarks#edit'
   get 'bookmarks/view' => 'bookmarks#show'
   delete 'bookmarks/' => 'bookmarks#destroy'
+  post 'bookmarks/react' => 'bookmarks#react'
   root 'bookmarks#index'
 
   get 'signup' => 'users#new'

@@ -36,8 +36,9 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
 
   test "should create bookmark with tags" do
     login
-    tag_names = ['programming', 'me']
+
     url = "github.bettinson.com"
+    tag_names = ['programming', 'me']
     assert_difference('Bookmark.count') do
       post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
     end
@@ -46,6 +47,41 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     tag = Tag.find_by(name: "programming")
     assert tag.bookmarks.include? (bookmark)
     assert bookmark.tags.include? (tag)
+  end
+
+  test "should create bookmark with reaction" do
+    login
+    url = "github.bettinson.com"
+    post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
+    bookmark = Bookmark.find_by(url: url)
+    assert_difference('Reaction.count') do
+      post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
+    end
+    reaction = Reaction.last
+    assert_equal reaction.bookmark, bookmark
+    assert_equal reaction.liked, 1
+
+  end
+
+  test "should create bookmark with reaction and nullify after 'like' post" do
+    login
+    url = "github.bettinson.com"
+    post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
+    bookmark = Bookmark.find_by(url: url)
+    assert_difference('Reaction.count') do
+      post bookmarks_react_url, params: {id: bookmark.id, liked: 1 }
+    end
+
+    reaction = Reaction.last
+
+    assert_no_difference('Reaction.count') do
+      post bookmarks_react_url, params: {id: bookmark.id, liked: 0 }
+    end
+
+    same_reaction = Reaction.last
+    assert_equal reaction.user, same_reaction.user
+    assert_equal reaction.bookmark, bookmark
+    assert_equal same_reaction.liked, 0
   end
 
   private
