@@ -18,22 +18,9 @@
           <%= link_to tag.name, tags_show_url(id: tag.id) %>
         <% end %>
         <% if current_user %>
-            <% reaction = current_user.reactions.find_by(user_id: current_user.id) %>
-            <%= reaction.liked %>
-            <% if reaction %>
-                <% if reaction.liked == nil %>
-                    <%= link_to "Like", bookmarks_react_path(id: bookmark.id, liked: true), method: :post %>
-                <% end %>
-                <% if reaction.liked %>
-                    <%= link_to "Unlike", bookmarks_react_path(id: bookmark.id, liked: true), method: :post %>
-                <% end %>
-                <% if reaction.liked == nil || reaction.liked %>
-                    <%= link_to "Dislike", bookmarks_react_path(id: bookmark.id, liked: false), method: :post %>
-                <% end %>
-            <% else %>
-                <%= link_to "Like", bookmarks_react_path(id: bookmark.id, liked: true), method: :post %>
-                <%= link_to "Dislike", bookmarks_react_path(id: bookmark.id, liked: false), method: :post %>
-            <% end %>
+            <p>Votes: <%= bookmark.score %></p>
+            <%= link_to "👍", bookmarks_react_path(id: bookmark.id, liked: 1), method: :post %>
+            <%= link_to "👎", bookmarks_react_path(id: bookmark.id, liked: -1), method: :post %>
         <% end %>
     </div>
     </p>

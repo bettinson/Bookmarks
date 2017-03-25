@@ -54,13 +54,14 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     url = "github.bettinson.com"
     post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
     bookmark = Bookmark.find_by(url: url)
+
     assert_difference('Reaction.count') do
       post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
     end
+
     reaction = Reaction.last
     assert_equal reaction.bookmark, bookmark
     assert_equal reaction.liked, 1
-
   end
 
   test "should create bookmark with reaction and nullify after 'like' post" do
@@ -68,20 +69,63 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     url = "github.bettinson.com"
     post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
     bookmark = Bookmark.find_by(url: url)
+
     assert_difference('Reaction.count') do
       post bookmarks_react_url, params: {id: bookmark.id, liked: 1 }
     end
 
     reaction = Reaction.last
 
-    assert_no_difference('Reaction.count') do
-      post bookmarks_react_url, params: {id: bookmark.id, liked: 0 }
-    end
-
     same_reaction = Reaction.last
     assert_equal reaction.user, same_reaction.user
     assert_equal reaction.bookmark, bookmark
-    assert_equal same_reaction.liked, 0
+  end
+
+
+  test "should create bookmark with reaction and not be able to vote more than once" do
+    login
+    url = "github.bettinson.com"
+    post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
+    bookmark = Bookmark.find_by(url: url)
+
+    assert_difference('Reaction.count') do
+      post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
+    end
+
+    reaction = Reaction.last
+    assert_equal reaction.bookmark, bookmark
+    assert_equal reaction.liked, 1
+
+    post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
+    assert_equal reaction.liked, 1
+  end
+
+  test "should create bookmark with reaction and not be able to vote more than once and have score" do
+    login
+    url = "github.bettinson.com"
+    post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
+    bookmark = Bookmark.find_by(url: url)
+
+    assert_difference('Reaction.count') do
+      post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
+    end
+
+    reaction = Reaction.last
+    assert_equal reaction.bookmark, bookmark
+    assert_equal reaction.liked, 1
+    bookmark.reload
+    assert_equal bookmark.score, 1
+
+    post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
+    assert_equal bookmark.score, 1
+    bookmark.reload
+    assert_equal reaction.liked, 1
+
+    post bookmarks_react_url, params: { id: bookmark.id, liked: -1 }
+    bookmark.reload
+    assert_equal bookmark.score, 0
+    reaction.reload
+    assert_equal reaction.liked, 0
   end
 
   private

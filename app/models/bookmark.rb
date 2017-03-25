@@ -4,4 +4,8 @@ class Bookmark < ApplicationRecord
   has_many :reactions
   validates :description, presence: true
   validates :url, presence: true
+
+  def init
+    self.score ||= 0
+  end
 end

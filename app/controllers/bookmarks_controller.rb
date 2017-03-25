@@ -37,9 +37,27 @@ class BookmarksController < ApplicationController
   def react
     @bookmark = Bookmark.find(params[:id])
     @reaction = Reaction.where(bookmark_id: @bookmark.id, user_id: current_user.id).first_or_initialize
-    @reaction.liked = params[:liked]
+
+    vote = params[:liked].to_i
+
+    if @reaction.liked.nil?
+      @reaction.liked = 0
+    end
+
+    unless @reaction.liked > 1 || @reaction.liked < -1
+      if @bookmark.score.nil?
+        @bookmark.score = vote
+      else
+        @bookmark.score += vote
+      end
+      @reaction.liked += vote
+    end
+
+    # Don't want to append the same one twice
     @bookmark.reactions.append @reaction unless @reaction.bookmark == @bookmark
+    @bookmark.save
     @reaction.save
+    redirect_to bookmarks_index_url
   end
 
   def destroy
