@@ -117,13 +117,13 @@ require 'test_helper'
 
     post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
     bookmark.reload
-    assert_equal bookmark.score, 2
+    assert_equal bookmark.score, 1
     reaction.reload
     assert_equal reaction.liked, 1
 
     post bookmarks_react_url, params: { id: bookmark.id, liked: -1 }
     bookmark.reload
-    assert_equal bookmark.score, 1
+    assert_equal bookmark.score, -1
     reaction.reload
     assert_equal reaction.liked, -1
   end

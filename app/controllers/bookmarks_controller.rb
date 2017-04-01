@@ -44,12 +44,22 @@ class BookmarksController < ApplicationController
       @reaction.liked = 0
     end
 
+    # Should probably do this checking on the model
     unless vote > 1 || vote < -1
-      @reaction.liked = vote
+      # byebug
+      can_vote = false
+
+      unless @reaction.liked == vote
+        can_vote = true
+      end
+
+      previous_reaction = @reaction.liked
+
+      @reaction.liked = vote 
       if @bookmark.score.nil?
         @bookmark.score = @reaction.liked
       else
-        @bookmark.score += @reaction.liked
+        @bookmark.score += @reaction.liked - previous_reaction if can_vote
       end
     end
 
