@@ -44,13 +44,13 @@ class BookmarksController < ApplicationController
       @reaction.liked = 0
     end
 
-    unless @reaction.liked > 1 || @reaction.liked < -1
+    unless vote > 1 || vote < -1
+      @reaction.liked = vote
       if @bookmark.score.nil?
-        @bookmark.score = vote
+        @bookmark.score = @reaction.liked
       else
-        @bookmark.score += vote
+        @bookmark.score += @reaction.liked
       end
-      @reaction.liked += vote
     end
 
     # Don't want to append the same one twice

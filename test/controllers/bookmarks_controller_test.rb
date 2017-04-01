@@ -1,6 +1,5 @@
 require 'test_helper'
-
-class BookmarksControllerTest < ActionDispatch::IntegrationTest
+ class BookmarksControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:matt)
   end
@@ -117,15 +116,16 @@ class BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_equal bookmark.score, 1
 
     post bookmarks_react_url, params: { id: bookmark.id, liked: 1 }
-    assert_equal bookmark.score, 1
     bookmark.reload
+    assert_equal bookmark.score, 2
+    reaction.reload
     assert_equal reaction.liked, 1
 
     post bookmarks_react_url, params: { id: bookmark.id, liked: -1 }
     bookmark.reload
-    assert_equal bookmark.score, 0
+    assert_equal bookmark.score, 1
     reaction.reload
-    assert_equal reaction.liked, 0
+    assert_equal reaction.liked, -1
   end
 
   private
