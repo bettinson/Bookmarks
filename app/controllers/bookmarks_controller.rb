@@ -39,14 +39,10 @@ class BookmarksController < ApplicationController
     @reaction = Reaction.where(bookmark_id: @bookmark.id, user_id: current_user.id).first_or_initialize
 
     vote = params[:liked].to_i
-
-    if @reaction.liked.nil?
-      @reaction.liked = 0
-    end
+    @reaction.liked = 0
 
     # Should probably do this checking on the model
     unless vote > 1 || vote < -1
-      # byebug
       can_vote = false
 
       unless @reaction.liked == vote
@@ -104,6 +100,7 @@ class BookmarksController < ApplicationController
   private
   def valid_bookmark?
     if @url.empty? || @description.empty?
+      false
     end
   end
 

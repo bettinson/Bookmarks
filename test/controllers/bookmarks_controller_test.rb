@@ -1,5 +1,5 @@
 require 'test_helper'
- class BookmarksControllerTest < ActionDispatch::IntegrationTest
+class BookmarksControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:matt)
   end
@@ -37,7 +37,6 @@ require 'test_helper'
     login
 
     url = "github.bettinson.com"
-    tag_names = ['programming', 'me']
     assert_difference('Bookmark.count') do
       post bookmarks_create_url, params: { url: url, description: "my site, with tags", tags: "programming me"}
     end
